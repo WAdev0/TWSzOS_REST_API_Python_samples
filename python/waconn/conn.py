@@ -66,7 +66,10 @@ class WAConn:
 
 		print 'Result: %d' % resp.status_code
 		if not (resp.status_code == 200 or resp.status_code == 201 or resp.status_code == 202):
-			print resp
+			j=resp.json()
+			print j["exceptionName"]
+			for m in j["messages"]:
+				print m
 			# This means something went wrong.
 			print (resp.status_code)
 			raise StandardError('%s %s : %s' % (method, url, resp.status_code))

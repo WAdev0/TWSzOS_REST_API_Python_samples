@@ -14,7 +14,7 @@ import datetime
 # -----------------------------------------------------
 # Define and parse command line arguments
 # -----------------------------------------------------
-parser = argparse.ArgumentParser(description='List resources defined in TWSz model')
+parser = argparse.ArgumentParser(description='List resources in TWSz plan')
 parser.add_argument('-e','--engineName', help='name of the engine as defined in the TWSz Connector', required=True, metavar="<engine_name>")
 parser.add_argument('-r','--resName', help='resource name filter', required=True, metavar="<resource_name_filter>")
 parser.add_argument('-n','--howMany', help='max numer of returned job streams', required=False, metavar="<how_many>")
@@ -33,8 +33,8 @@ conn = waconn.WAConn('waconn.ini','/twsz/v1/'+args.engineName)
 # -----------------------------------------------------
 # Query the model and get the resource id
 # -----------------------------------------------------
-resp = conn.post('/model/resource/header/query', 
-	json={"filters": {"resourceFilter": {"resourceName": args.resName}}},
+resp = conn.post('/plan/current/resource/query', 
+	json={"filters": {"resourceInPlanFilter": {"resourceName": args.resName}}},
 	headers={'How-Many': howMany})
 
 r = resp.json()
@@ -47,4 +47,4 @@ if len(r) == 0:
 # -----------------------------------------------------
 
 for res in r:
-	print (res["key"]["name"])
+	print (res["resourceInPlanKey"]["name"])

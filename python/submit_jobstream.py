@@ -34,7 +34,7 @@ submit = {"name": args.jsName, "startTime": now}
 
 # now we can submit the js
 print "submit parameters: " +str(submit)
-resp = conn.post('/plan/current/jobstream/action/add_jobstream', json=submit)
+resp = conn.post('/plan/current/jobstream/action/submit_jobstream', json=submit)
 
 r = resp.json()
 

@@ -33,7 +33,7 @@ conn = waconn.WAConn('waconn.ini','/twsz/v1/'+args.engineName)
 # -----------------------------------------------------
 # Query the model and get the js id
 # -----------------------------------------------------
-resp = conn.post('/plan/{planId}/jobstream/query', 
+resp = conn.post('/plan/current/jobstream/query', 
 	json={"filters": {"jobStreamInPlanFilter ": {"jobStreamName": args.jsName}}},
 	headers={'How-Many': howMany})
 
