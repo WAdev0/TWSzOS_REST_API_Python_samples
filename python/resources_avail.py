@@ -52,10 +52,10 @@ for res in r:
 	response = conn.get('/plan/current/resource/'+res["id"])
 	res = response.json()
 	print (res)
-	print ("current overridden availability: "+res["defaultConstraints"]["zosSpecificAttributes"]["overriddenAvailability"])
+	print ("current overridden availability: "+res["defaultConstraints"]["isAvailable"])
 	# Set overriddenAvailability and save
-	res["defaultConstraints"]["zosSpecificAttributes"]["overriddenAvailability"] = "YES" if (args.avail == 'yes') else "NO"
-	print ("new overridden availability: "+res["defaultConstraints"]["zosSpecificAttributes"]["overriddenAvailability"])
+	res["defaultConstraints"]["isAvailable"] = "YES" if (args.avail == 'yes') else "NO"
+	print ("new overridden availability: "+res["defaultConstraints"]["isAvailable"])
 	res = conn.put('/plan/current/resource/'+res["id"],json=res)
 	print (res)
 
