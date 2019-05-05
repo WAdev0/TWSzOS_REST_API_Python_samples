@@ -56,7 +56,7 @@ for job in r:
 	joblog_path = "D:/joblog/"
 	if not (response.status_code == 200):
 		for j in joblog["messages"]:
-			if ("EQQM637I" in j):
+			if ("EQQM637I" in j or "EQQM391I" in j):
 				time.sleep(10)
 				response = conn.get('/plan/current/job/'+job["id"]+'/joblog')
 				joblog = response.json()
