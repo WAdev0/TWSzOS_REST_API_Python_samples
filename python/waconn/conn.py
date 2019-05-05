@@ -47,6 +47,7 @@ class WAConn:
 		hosts = self.config['hosts']
 		retries = 0
 		resp = None
+		skipError = False
 		while retry and retries < len(hosts):
 			retry = False
 			url = hosts[self.hostIdx] + self.prefix + uri
@@ -66,13 +67,19 @@ class WAConn:
 
 		print 'Result: %d' % resp.status_code
 		if not (resp.status_code == 200 or resp.status_code == 201 or resp.status_code == 202):
-			j=resp.json()
-			print j["exceptionName"]
-			for m in j["messages"]:
-				print m
-			# This means something went wrong.
+			try:
+				j = resp.json()
+				print j["exceptionName"]
+				for m in j["messages"]:
+					if ("EQQM637I" in m or "EQQM391I" in m):
+						skipError = True
+					print m
+			except ValueError:
+				print resp.content
+
 			print (resp.status_code)
-			raise StandardError('%s %s : %s' % (method, url, resp.status_code))
+			if (skipError == False):
+				raise StandardError('%s %s : %s' % (method, url, resp.status_code))
 			
 		return resp
 
@@ -90,8 +97,8 @@ class WAConn:
 			headers['Accept'] = 'text/plain'
 		return self.request('POST', uri, headers=headers, data=text)
 
-	def get(self, uri, params=None):
-		return self.request('GET', uri, params=params)
+	def get(self, uri, params=None,headers=None):
+		return self.request('GET', uri, headers=headers, params=params)
 	
 
 				
