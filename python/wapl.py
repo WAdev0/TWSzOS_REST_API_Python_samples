@@ -32,9 +32,9 @@ conn = waconn.WAConn('waconn.ini','/twsz/v1/'+args.engineName)
 # -----------------------------------------------------
 resp = conn.textPost('/wapl', text=args.cmds)
 
-r = resp.json()
+r = resp.response
 if len(r) == 0:
-    print('job stream not found')
+    print('no response')
     exit(2)
 
 # -----------------------------------------------------
