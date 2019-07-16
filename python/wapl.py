@@ -32,7 +32,7 @@ conn = waconn.WAConn('waconn.ini','/twsz/v1/'+args.engineName)
 # -----------------------------------------------------
 resp = conn.textPost('/wapl', text=args.cmds)
 
-r = resp.response
+r = resp.content
 if len(r) == 0:
     print('no response')
     exit(2)
